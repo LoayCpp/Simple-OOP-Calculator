@@ -2,67 +2,75 @@
 
 #include <iostream>
 using namespace std;
-class clsCalculator {
+class clsCalculator
+{
 
-private :
-    float _Num=0;
-    float _OldNum=0;
-    void Messages(string message) {
+private:
+    float _LastNum = 0;
+    float _Result = 0;
+    float _OldResult = 0;
+    string _Nameoperaror = "Clear";
 
-        cout << "Result After " << message<<" " << _OldNum << " is :";
+    bool _IsZero(float Num)
+    {
+
+        return (Num == 0);
     }
+
 public:
-
-   
-    void Clear() {
-
-        _Num = 0;
-      
+    void Clear()
+    {
+        _LastNum = 0;
+        _Result = 0;
+        _OldResult = 0;
+        _Nameoperaror = "Clear";
     }
-    void Add(float Number) {
-        _OldNum = Number;
-        Messages("Adding");
-
-        _Num += _OldNum;
-
+    void Add(float Number)
+    {
+        _LastNum = Number;
+        _OldResult = _Result;
+        _Nameoperaror = "Adding";
+        _Result += Number;
     }
-    void Subtract(float Number) {
-        _OldNum = Number;
-        Messages("Subtract");
 
-        _Num -= _OldNum;
-
+    void Subtract(float Number)
+    {
+        _LastNum = Number;
+        _OldResult = _Result;
+        _Nameoperaror = "Subtracing";
+        _Result -= Number;
     }
-    void Divide(float Number) {
 
-        if (Number <= 0) {
-            _OldNum = 1;
-           
+    void Divide(float Number)
+    {
+        if (_IsZero(Number))
+        {
 
+            Number = 1;
         }
-        else {
-            _OldNum = Number;
-
-        }
-        Messages("Divide");
-        _Num /= _OldNum;
-
+        _LastNum = Number;
+        _OldResult = _Result;
+        _Nameoperaror = "Dividing";
+        _Result /= Number;
     }
-    void Multiply(float Number) {
-        _OldNum = Number;
-        Messages("Multiplying");
-
-        _Num *= _OldNum;
-
+    void Multiply(float Number)
+    {
+        _LastNum = Number;
+        _Nameoperaror = "Maltiplying";
+        _OldResult = _Result;
+        _Result *= Number;
     }
-    void PrintResult() {
-
-
-
-        cout << _Num<<endl;
-
+    void CancelOperation()
+    {
+        _LastNum = 0;
+        _Nameoperaror = "CancelOperation";
+        _Result = _OldResult;
     }
+    void PrintResult()
+    {
 
+        cout << "Result After " << _Nameoperaror << " " << _LastNum << " is :" << _Result << endl;
+    }
 };
 int main()
 {
@@ -83,5 +91,7 @@ int main()
     Calcul1.PrintResult();
 
     Calcul1.Multiply(3);
+    Calcul1.PrintResult();
+    Calcul1.CancelOperation();
     Calcul1.PrintResult();
 }
